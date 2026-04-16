@@ -48,7 +48,7 @@ async function buildStatus(
     accountId,
     configured,
   })) ?? [
-    `${plugin.meta.label}: ${configured ? wizard.status.configuredLabel : wizard.status.unconfiguredLabel}`,
+    `${plugin.meta.label ?? plugin.id}: ${configured ? wizard.status.configuredLabel : wizard.status.unconfiguredLabel}`,
   ];
   const selectionHint =
     (await wizard.status.resolveSelectionHint?.({

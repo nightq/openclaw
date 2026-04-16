@@ -95,18 +95,21 @@ export function getRegisteredChannelPluginMeta(
 }
 
 export function formatChannelPrimerLine(meta: ChannelMeta): string {
-  return `${meta.label}: ${meta.blurb}`;
+  const label = meta.label ?? meta.id ?? "unknown";
+  const blurb = meta.blurb ?? "";
+  return `${label}: ${blurb}`;
 }
 
 export function formatChannelSelectionLine(
   meta: ChannelMeta,
   docsLink: (path: string, label?: string) => string,
 ): string {
+  const label = meta.label ?? meta.id ?? "unknown";
+  const blurb = meta.blurb ?? "";
   const docsPrefix = meta.selectionDocsPrefix ?? "Docs:";
-  const docsLabel = meta.docsLabel ?? meta.id;
-  const docs = meta.selectionDocsOmitLabel
-    ? docsLink(meta.docsPath)
-    : docsLink(meta.docsPath, docsLabel);
+  const docsLabel = meta.docsLabel ?? meta.id ?? "unknown";
+  const docsPath = meta.docsPath ?? `/channels/${meta.id}`;
+  const docs = meta.selectionDocsOmitLabel ? docsLink(docsPath) : docsLink(docsPath, docsLabel);
   const extras = (meta.selectionExtras ?? []).filter(Boolean).join(" ");
-  return `${meta.label} — ${meta.blurb} ${docsPrefix ? `${docsPrefix} ` : ""}${docs}${extras ? ` ${extras}` : ""}`;
+  return `${label} — ${blurb} ${docsPrefix ? `${docsPrefix} ` : ""}${docs}${extras ? ` ${extras}` : ""}`;
 }

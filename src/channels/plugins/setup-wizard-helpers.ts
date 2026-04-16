@@ -991,7 +991,7 @@ export async function promptSingleChannelToken(params: {
         message: params.inputPrompt,
         validate: (value) => (value?.trim() ? undefined : "Required"),
       })
-    ).trim();
+    )?.trim() ?? "";
 
   if (params.canUseEnv) {
     const keepEnv = await params.prompter.confirm({

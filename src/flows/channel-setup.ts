@@ -219,8 +219,8 @@ export async function setupChannels(
 
   const primerChannels = resolveVisibleChannelEntries().entries.map((entry) => ({
     id: entry.id,
-    label: entry.meta.label,
-    blurb: entry.meta.blurb,
+    label: entry.meta.label ?? entry.id,
+    blurb: entry.meta.blurb ?? "",
   }));
   await noteChannelPrimer(prompter, primerChannels);
 
