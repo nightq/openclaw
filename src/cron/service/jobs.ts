@@ -157,8 +157,8 @@ export function assertSupportedJobSpec(job: Pick<CronJob, "sessionTarget" | "pay
   const isIsolatedLike =
     job.sessionTarget === "isolated" ||
     job.sessionTarget === "current" ||
-    job.sessionTarget.startsWith("session:");
-  if (job.sessionTarget.startsWith("session:")) {
+    (job.sessionTarget?.startsWith("session:") ?? false);
+  if (job.sessionTarget?.startsWith("session:")) {
     assertSafeCronSessionTargetId(job.sessionTarget.slice(8));
   }
   if (job.sessionTarget === "main" && job.payload.kind !== "systemEvent") {
@@ -205,7 +205,7 @@ function assertDeliverySupport(job: Pick<CronJob, "sessionTarget" | "delivery">)
   const isIsolatedLike =
     job.sessionTarget === "isolated" ||
     job.sessionTarget === "current" ||
-    job.sessionTarget.startsWith("session:");
+    (job.sessionTarget?.startsWith("session:") ?? false);
   if (!isIsolatedLike) {
     throw new Error('cron channel delivery config is only supported for sessionTarget="isolated"');
   }
